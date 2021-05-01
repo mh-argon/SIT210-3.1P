@@ -1,0 +1,32 @@
+// This #include statement was automatically added by the Particle IDE.
+#include <Adafruit_DHT.h>
+
+// defines the input pin
+#define DHTPIN 2
+
+// defines the humidity sensor variation
+#define DHTTYPE DHT22
+
+// 
+DHT dht(DHTPIN, DHTTYPE);
+
+// Power Pin connected to 3V3
+// Data Pin connected to D2
+// Ground pin connected to Ground
+
+void setup() 
+{
+    dht.begin();
+}
+
+void loop() 
+{
+    // grabs the tempreture and sets it to a variable that is called tempreture of type float
+    float tempreture = dht.getTempCelcius();
+    // sets temp as the input tempreture and converts it to string
+    String temp = String(tempreture);
+    // publishes data to the ThingSpeak via Particle integration
+    Particle.publish("temp", temp, PRIVATE);
+    // delays time by 30
+    delay(30000);
+}
